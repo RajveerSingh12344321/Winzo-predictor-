@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WinZO Predictor 2.0</title>
+    <style>
+        body { background-color: #0e3c74; color: white; font-family: Arial, sans-serif; text-align: center; padding: 40px; }
+        .card { background: white; color: black; border-radius: 12px; padding: 20px; max-width: 400px; margin: auto; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        .hidden { display: none; }
+        input, button { padding: 10px; margin-top: 10px; width: 80%; border-radius: 8px; border: none; font-size: 16px; }
+        button { background-color: #004aad; color: white; cursor: pointer; }
+        button:hover { background-color: #00337a; }
+        .winner { font-size: 24px; margin-top: 20px; color: greenyellow; animation: pop 0.5s ease; }
+        @keyframes pop { from { transform: scale(0.8); } to { transform: scale(1); } }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>🔐 Enter Password</h2>
+        <input type="password" id="passwordInput" placeholder="Enter password">
+        <button onclick="checkPassword()">Submit</button>
+    </div>
+
+    <div class="card hidden" id="mainApp">
+        <h2>🏆 WinZO Predictor 2.0</h2>
+        <p>Enter team data to predict winner</p>
+        <input id="kohliScore" type="number" placeholder="Kohli Avg Score">
+        <input id="kohliPlayers" type="number" placeholder="Kohli Players">
+        <input id="dhoniScore" type="number" placeholder="Dhoni Avg Score">
+        <input id="dhoniPlayers" type="number" placeholder="Dhoni Players">
+        <button onclick="predict()">Predict Winner</button>
+        <div class="winner" id="result"></div>
+    </div>
+
+    <script>
+        const correctPassword = "AI 2.0";
+
+        function checkPassword() {
+            const input = document.getElementById("passwordInput").value;
+            if (input === correctPassword) {
+                document.querySelector(".card").classList.add("hidden");
+                document.getElementById("mainApp").classList.remove("hidden");
+            } else {
+                alert("Incorrect Password");
+            }
+        }
+
+        function predict() {
+            let kScore = parseFloat(document.getElementById("kohliScore").value);
+            let kPlayers = parseFloat(document.getElementById("kohliPlayers").value);
+            let dScore = parseFloat(document.getElementById("dhoniScore").value);
+            let dPlayers = parseFloat(document.getElementById("dhoniPlayers").value);
+
+            let kohliPower = kScore * kPlayers;
+            let dhoniPower = dScore * dPlayers;
+
+            let result = (kohliPower > dhoniPower) ? "🏆 Kohli Wins!" : "🏆 Dhoni Wins!";
+            document.getElementById("result").innerText = result;
+        }
+    </script>
+</body>
+</html>
